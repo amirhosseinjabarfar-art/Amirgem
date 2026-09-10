@@ -1,1683 +1,2058 @@
-```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>امیر جم | پسرخوانده</title>
+<title>امیر جم | فروش جم و سکه پسرخوانده</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Vazirmatn",sans-serif;
 }
 
 html{
-    scroll-behavior:smooth;
+scroll-behavior:smooth;
 }
 
 body{
-    font-family:"Vazirmatn",sans-serif;
-    background:
-        radial-gradient(circle at 15% 10%,rgba(0,174,255,.20),transparent 28%),
-        radial-gradient(circle at 85% 20%,rgba(255,193,7,.20),transparent 30%),
-        linear-gradient(135deg,#fafdff,#eef8ff 45%,#fffaf0);
-    color:#10243a;
-    overflow-x:hidden;
+background:
+radial-gradient(circle at 10% 10%,rgba(0,153,255,.12),transparent 28%),
+radial-gradient(circle at 90% 20%,rgba(255,196,0,.13),transparent 28%),
+linear-gradient(135deg,#ffffff,#f3f9ff,#ffffff);
+color:#10233f;
+overflow-x:hidden;
 }
 
-/* =========================
-   LOADING SCREEN
-========================= */
-
-#loadingScreen{
-    position:fixed;
-    inset:0;
-    z-index:99999;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    background:
-        radial-gradient(circle at 50% 35%,rgba(0,177,255,.16),transparent 30%),
-        linear-gradient(135deg,#fafdff,#eaf7ff,#fffaf0);
-    backdrop-filter:blur(18px);
+.top-notice{
+width:100%;
+background:linear-gradient(90deg,#087cff,#00a8ff,#087cff);
+color:white;
+text-align:center;
+padding:11px 15px;
+font-size:14px;
+font-weight:700;
+position:relative;
+z-index:1001;
+box-shadow:0 5px 25px rgba(0,126,255,.25);
+overflow:hidden;
 }
 
-#loadingScreen.active{
-    display:flex;
+.top-notice::before{
+content:"";
+position:absolute;
+top:0;
+left:-120%;
+width:70%;
+height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+transform:skewX(-25deg);
+animation:noticeLight 4s infinite;
 }
 
-.loadingBox{
-    width:min(90%,480px);
-    text-align:center;
-    padding:45px 30px;
-    border-radius:32px;
-    background:rgba(255,255,255,.88);
-    border:1px solid rgba(0,151,230,.2);
-    box-shadow:
-        0 30px 90px rgba(0,100,180,.18),
-        0 0 50px rgba(0,170,255,.12);
-    animation:loadingBoxIn .7s ease both;
+@keyframes noticeLight{
+0%{left:-120%}
+55%,100%{left:150%}
 }
-
-@keyframes loadingBoxIn{
-    from{
-        opacity:0;
-        transform:scale(.75) translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:scale(1) translateY(0);
-    }
-}
-
-.loadingDiamond{
-    font-size:70px;
-    display:block;
-    margin-bottom:20px;
-    filter:drop-shadow(0 0 20px #00aaff);
-    animation:
-        loadingFloat 1.8s ease-in-out infinite,
-        loadingRotate 5s linear infinite;
-}
-
-@keyframes loadingFloat{
-    50%{
-        transform:translateY(-12px) scale(1.08);
-    }
-}
-
-@keyframes loadingRotate{
-    0%{filter:drop-shadow(0 0 15px #00aaff)}
-    50%{filter:drop-shadow(0 0 35px #ffd000)}
-    100%{filter:drop-shadow(0 0 15px #00aaff)}
-}
-
-.loadingBox h2{
-    color:#087fc4;
-    font-size:25px;
-    font-weight:900;
-    margin-bottom:12px;
-}
-
-.loadingBox p{
-    color:#6b8093;
-    font-size:14px;
-    line-height:2;
-}
-
-.loadingDots{
-    display:flex;
-    justify-content:center;
-    gap:8px;
-    margin:25px 0 20px;
-}
-
-.loadingDots span{
-    width:11px;
-    height:11px;
-    border-radius:50%;
-    background:#009fea;
-    box-shadow:0 0 15px #009fea;
-    animation:dotPulse 1.2s infinite;
-}
-
-.loadingDots span:nth-child(2){
-    animation-delay:.2s;
-}
-
-.loadingDots span:nth-child(3){
-    animation-delay:.4s;
-}
-
-@keyframes dotPulse{
-    0%,100%{
-        transform:translateY(0);
-        opacity:.35;
-    }
-    50%{
-        transform:translateY(-10px);
-        opacity:1;
-    }
-}
-
-.loadingBar{
-    height:8px;
-    width:100%;
-    background:#e3f3fa;
-    border-radius:99px;
-    overflow:hidden;
-    margin-top:12px;
-}
-
-.loadingProgress{
-    height:100%;
-    width:0%;
-    border-radius:99px;
-    background:linear-gradient(90deg,#00aaff,#006dcc,#ffc400);
-    box-shadow:0 0 18px rgba(0,157,240,.6);
-    animation:loadingProgress 5s linear forwards;
-}
-
-@keyframes loadingProgress{
-    from{width:0%}
-    to{width:100%}
-}
-
-
-/* =========================
-   BACKGROUND
-========================= */
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:
-        radial-gradient(circle at 30% 50%,rgba(0,183,255,.08),transparent 25%),
-        radial-gradient(circle at 70% 70%,rgba(255,193,7,.08),transparent 25%);
-    animation:bgMove 8s ease-in-out infinite alternate;
-    z-index:-2;
-}
-
-@keyframes bgMove{
-    from{
-        transform:scale(1) translate(0,0);
-    }
-    to{
-        transform:scale(1.15) translate(-2%,2%);
-    }
-}
-
-
-/* =========================
-   PARTICLES
-========================= */
 
 .particles{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-    z-index:-1;
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:-1;
+overflow:hidden;
 }
 
 .particle{
-    position:absolute;
-    width:4px;
-    height:4px;
-    border-radius:50%;
-    background:#00aaff;
-    box-shadow:0 0 12px #00aaff;
-    animation:floatParticle linear infinite;
+position:absolute;
+width:5px;
+height:5px;
+border-radius:50%;
+background:#1495ff;
+opacity:.3;
+animation:floatParticle linear infinite;
 }
 
-.particle:nth-child(1){left:5%;top:80%;animation-duration:9s}
-.particle:nth-child(2){left:15%;top:50%;animation-duration:13s}
-.particle:nth-child(3){left:25%;top:90%;animation-duration:11s}
-.particle:nth-child(4){left:35%;top:60%;animation-duration:15s}
-.particle:nth-child(5){left:45%;top:85%;animation-duration:10s}
-.particle:nth-child(6){left:55%;top:45%;animation-duration:14s}
-.particle:nth-child(7){left:65%;top:75%;animation-duration:12s}
-.particle:nth-child(8){left:75%;top:30%;animation-duration:16s}
-.particle:nth-child(9){left:85%;top:65%;animation-duration:11s}
-.particle:nth-child(10){left:95%;top:40%;animation-duration:13s}
+.particle:nth-child(1){left:5%;top:20%;animation-duration:9s}
+.particle:nth-child(2){left:15%;top:70%;animation-duration:12s}
+.particle:nth-child(3){left:28%;top:30%;animation-duration:10s}
+.particle:nth-child(4){left:40%;top:80%;animation-duration:14s}
+.particle:nth-child(5){left:55%;top:15%;animation-duration:11s}
+.particle:nth-child(6){left:67%;top:60%;animation-duration:13s}
+.particle:nth-child(7){left:78%;top:25%;animation-duration:9s}
+.particle:nth-child(8){left:90%;top:75%;animation-duration:15s}
+.particle:nth-child(9){left:95%;top:40%;animation-duration:12s}
+.particle:nth-child(10){left:33%;top:55%;animation-duration:8s}
 
 @keyframes floatParticle{
-    0%{
-        transform:translateY(100px) scale(.5);
-        opacity:0;
-    }
-    20%{opacity:1}
-    80%{opacity:1}
-    100%{
-        transform:translateY(-110vh) scale(1.5);
-        opacity:0;
-    }
+0%{
+transform:translateY(0) translateX(0);
+opacity:.1;
 }
-
-
-/* =========================
-   HEADER
-========================= */
+50%{
+transform:translateY(-80px) translateX(25px);
+opacity:.7;
+}
+100%{
+transform:translateY(-160px) translateX(-15px);
+opacity:0;
+}
+}
 
 header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    padding:15px 5%;
-    backdrop-filter:blur(18px);
-    background:rgba(255,255,255,.78);
-    border-bottom:1px solid rgba(0,157,255,.15);
-    box-shadow:0 5px 30px rgba(0,125,220,.08);
+position:sticky;
+top:0;
+z-index:1000;
+background:rgba(255,255,255,.82);
+backdrop-filter:blur(18px);
+border-bottom:1px solid rgba(0,126,255,.1);
+box-shadow:0 5px 30px rgba(0,80,160,.08);
 }
 
-.nav{
-    max-width:1200px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
+.navbar{
+max-width:1250px;
+margin:auto;
+padding:15px 20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
 }
 
 .logo{
-    font-size:25px;
-    font-weight:900;
-    color:#078fe8;
-    text-shadow:0 0 15px rgba(0,157,255,.25);
+display:flex;
+align-items:center;
+gap:10px;
+font-size:23px;
+font-weight:900;
+color:#087cff;
+text-decoration:none;
 }
 
-.logo span{
-    color:#e6a900;
+.logo-icon{
+width:45px;
+height:45px;
+border-radius:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,#087cff,#5ec8ff);
+color:white;
+font-size:23px;
+box-shadow:0 8px 25px rgba(0,126,255,.3);
+animation:logoPulse 2.5s infinite;
 }
 
-.nav a{
-    text-decoration:none;
-    color:#17324a;
-    font-weight:700;
-    padding:10px 17px;
-    border-radius:14px;
-    transition:.3s;
+@keyframes logoPulse{
+0%,100%{
+transform:translateY(0) rotate(0);
+box-shadow:0 8px 25px rgba(0,126,255,.3);
+}
+50%{
+transform:translateY(-3px) rotate(3deg);
+box-shadow:0 12px 35px rgba(0,126,255,.5);
+}
 }
 
-.nav a:hover{
-    color:#008ee8;
-    background:#eaf8ff;
-    transform:translateY(-3px);
+nav{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+justify-content:center;
 }
 
+nav a{
+text-decoration:none;
+color:#29415f;
+font-size:14px;
+font-weight:700;
+padding:10px 14px;
+border-radius:12px;
+transition:.3s;
+}
 
-/* =========================
-   HERO
-========================= */
+nav a:hover{
+color:#087cff;
+background:#eef7ff;
+transform:translateY(-2px);
+}
 
 .hero{
-    min-height:680px;
-    max-width:1250px;
-    margin:auto;
-    padding:90px 5% 70px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:50px;
-    position:relative;
-}
-
-.hero-content{
-    max-width:650px;
-    animation:heroIn 1s ease both;
-}
-
-@keyframes heroIn{
-    from{
-        opacity:0;
-        transform:translateY(50px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+max-width:1250px;
+margin:auto;
+min-height:590px;
+padding:70px 25px 80px;
+display:grid;
+grid-template-columns:1.1fr .9fr;
+align-items:center;
+gap:50px;
 }
 
 .badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:9px 16px;
-    border-radius:999px;
-    background:rgba(0,165,255,.1);
-    color:#0089dc;
-    border:1px solid rgba(0,165,255,.25);
-    box-shadow:0 0 25px rgba(0,165,255,.12);
-    font-weight:700;
-    margin-bottom:22px;
+display:inline-flex;
+align-items:center;
+gap:8px;
+background:#eaf5ff;
+color:#087cff;
+padding:9px 15px;
+border-radius:50px;
+font-weight:800;
+font-size:13px;
+box-shadow:0 8px 25px rgba(0,126,255,.08);
+animation:badgeFloat 3s ease-in-out infinite;
 }
 
-.badge::before{
-    content:"";
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:#00b7ff;
-    box-shadow:0 0 15px #00b7ff;
-    animation:pulse 1.2s infinite;
-}
-
-@keyframes pulse{
-    50%{
-        transform:scale(1.7);
-        opacity:.5;
-    }
+@keyframes badgeFloat{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-5px)}
 }
 
 .hero h1{
-    font-size:clamp(45px,7vw,85px);
-    line-height:1.1;
-    font-weight:900;
-    background:linear-gradient(
-        90deg,
-        #008ee8,
-        #00baff,
-        #e4a900,
-        #008ee8
-    );
-    background-size:300%;
-    -webkit-background-clip:text;
-    color:transparent;
-    animation:titleGlow 5s linear infinite;
+margin-top:20px;
+font-size:clamp(48px,7vw,90px);
+line-height:1;
+font-weight:900;
+background:linear-gradient(90deg,#006cff,#00aaff,#ffc400,#006cff);
+background-size:300%;
+-webkit-background-clip:text;
+color:transparent;
+animation:titleGradient 5s linear infinite;
 }
 
-@keyframes titleGlow{
-    to{
-        background-position:300%;
-    }
+@keyframes titleGradient{
+0%{background-position:0%}
+100%{background-position:300%}
 }
 
 .hero h2{
-    margin-top:18px;
-    font-size:clamp(20px,3vw,31px);
-    color:#29435c;
+margin-top:18px;
+font-size:clamp(25px,4vw,43px);
+font-weight:900;
+color:#17375e;
 }
 
 .hero p{
-    margin-top:18px;
-    line-height:2;
-    color:#617589;
-    font-size:17px;
+margin-top:20px;
+max-width:650px;
+line-height:2;
+color:#61738c;
+font-size:16px;
 }
 
 .hero-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:14px;
-    margin-top:30px;
+margin-top:30px;
+display:flex;
+gap:13px;
+flex-wrap:wrap;
 }
 
 .btn{
-    border:none;
-    cursor:pointer;
-    display:inline-flex;
-    justify-content:center;
-    align-items:center;
-    gap:8px;
-    padding:15px 24px;
-    border-radius:17px;
-    font-family:inherit;
-    font-size:15px;
-    font-weight:800;
-    transition:.35s;
+border:none;
+cursor:pointer;
+text-decoration:none;
+padding:14px 22px;
+border-radius:16px;
+font-weight:800;
+font-size:14px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+transition:.3s;
 }
 
 .btn-primary{
-    color:white;
-    background:linear-gradient(135deg,#009df5,#006dcc);
-    box-shadow:
-        0 12px 35px rgba(0,145,235,.28),
-        inset 0 1px 0 rgba(255,255,255,.4);
+color:white;
+background:linear-gradient(135deg,#087cff,#00b2ff);
+box-shadow:0 12px 30px rgba(0,126,255,.25);
 }
 
 .btn-primary:hover{
-    transform:translateY(-5px) scale(1.03);
-    box-shadow:0 18px 45px rgba(0,145,235,.42);
+transform:translateY(-4px) scale(1.02);
+box-shadow:0 18px 38px rgba(0,126,255,.38);
 }
 
-.btn-gold{
-    color:#543d00;
-    background:linear-gradient(135deg,#ffd85a,#eeb300);
-    box-shadow:0 12px 35px rgba(235,178,0,.25);
+.btn-secondary{
+color:#087cff;
+background:white;
+border:1px solid #dcecff;
 }
 
-.btn-gold:hover{
-    transform:translateY(-5px) scale(1.03);
-    box-shadow:0 18px 45px rgba(235,178,0,.4);
+.btn-secondary:hover{
+transform:translateY(-4px);
+background:#f5faff;
 }
 
-
-/* =========================
-   HERO ORB
-========================= */
-
-.hero-art{
-    width:370px;
-    height:370px;
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.hero-visual{
+position:relative;
+height:430px;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-.orb{
-    width:245px;
-    height:245px;
-    border-radius:50%;
-    background:
-        radial-gradient(circle at 35% 30%,#fff 0 3%,transparent 4%),
-        radial-gradient(circle,#8fe7ff,#009eea 45%,#0069bd);
-    box-shadow:
-        0 0 40px #00aaff,
-        0 0 90px rgba(0,170,255,.5),
-        inset -25px -25px 45px rgba(0,50,130,.35);
-    animation:orbFloat 4s ease-in-out infinite;
-    position:relative;
+.glow{
+position:absolute;
+width:280px;
+height:280px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(0,166,255,.35),transparent 70%);
+animation:glow 3s infinite alternate;
 }
 
-.orb::before,
-.orb::after{
-    content:"";
-    position:absolute;
-    inset:-35px;
-    border:2px solid rgba(0,166,255,.28);
-    border-radius:50%;
-    animation:orbit 7s linear infinite;
+@keyframes glow{
+from{
+transform:scale(.85);
+opacity:.5;
+}
+to{
+transform:scale(1.2);
+opacity:1;
+}
 }
 
-.orb::after{
-    inset:-60px;
-    animation-duration:11s;
-    border-color:rgba(255,193,7,.3);
+.diamond{
+position:relative;
+width:180px;
+height:180px;
+transform:rotate(45deg);
+border-radius:25px;
+background:linear-gradient(135deg,#ffffff 0%,#7ddcff 25%,#008cff 50%,#b9efff 75%,#ffffff 100%);
+box-shadow:
+0 0 25px #00aaff,
+0 0 70px rgba(0,153,255,.55),
+inset 10px 10px 25px rgba(255,255,255,.8);
+animation:diamondFloat 4s ease-in-out infinite;
 }
 
-@keyframes orbFloat{
-    50%{
-        transform:translateY(-18px) rotate(4deg);
-    }
+.diamond::before{
+content:"💎";
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+transform:rotate(-45deg);
+font-size:105px;
+filter:drop-shadow(0 5px 10px rgba(0,100,255,.3));
 }
+
+@keyframes diamondFloat{
+0%,100%{
+transform:rotate(45deg) translateY(0);
+}
+50%{
+transform:rotate(49deg) translateY(-20px);
+}
+}
+
+.orbit{
+position:absolute;
+width:330px;
+height:330px;
+border:1px dashed rgba(0,126,255,.3);
+border-radius:50%;
+animation:orbit 12s linear infinite;
+}
+
+.orbit span{
+position:absolute;
+width:40px;
+height:40px;
+border-radius:50%;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 5px 20px rgba(0,100,200,.18);
+}
+
+.orbit span:nth-child(1){top:-20px;left:50%}
+.orbit span:nth-child(2){right:-20px;top:50%}
+.orbit span:nth-child(3){bottom:-20px;left:50%}
+.orbit span:nth-child(4){left:-20px;top:50%}
 
 @keyframes orbit{
-    to{
-        transform:rotate(360deg);
-    }
+to{
+transform:rotate(360deg);
+}
 }
 
-.orb-text{
-    position:absolute;
-    z-index:2;
-    font-size:75px;
-    filter:drop-shadow(0 0 15px rgba(255,255,255,.9));
-    animation:diamondPulse 2s infinite;
+.section{
+max-width:1250px;
+margin:auto;
+padding:80px 20px;
 }
 
-@keyframes diamondPulse{
-    50%{
-        transform:scale(1.12);
-    }
+.section-head{
+text-align:center;
+margin-bottom:45px;
 }
 
-
-/* =========================
-   SECTIONS
-========================= */
-
-section{
-    max-width:1200px;
-    margin:0 auto;
-    padding:80px 5%;
+.section-head .mini{
+display:inline-block;
+font-size:13px;
+font-weight:900;
+color:#087cff;
+background:#edf7ff;
+padding:7px 13px;
+border-radius:50px;
 }
 
-.section-title{
-    text-align:center;
-    margin-bottom:45px;
+.section-head h2{
+margin-top:13px;
+font-size:34px;
+font-weight:900;
+color:#17375e;
 }
 
-.section-title h2{
-    font-size:38px;
-    color:#123a59;
+.section-head p{
+margin-top:10px;
+color:#71839b;
 }
-
-.section-title p{
-    margin-top:10px;
-    color:#71869a;
-}
-
-
-/* =========================
-   PRODUCTS
-========================= */
 
 .products{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
 }
 
-.card{
-    position:relative;
-    overflow:hidden;
-    padding:25px;
-    min-height:245px;
-    background:rgba(255,255,255,.85);
-    border:1px solid rgba(0,140,220,.14);
-    border-radius:25px;
-    box-shadow:0 15px 45px rgba(0,100,170,.08);
-    transition:.45s;
-    animation:cardIn .7s ease both;
+.product-card{
+position:relative;
+background:rgba(255,255,255,.9);
+border:1px solid #e5f0fb;
+border-radius:25px;
+padding:24px;
+overflow:hidden;
+box-shadow:0 12px 35px rgba(35,100,160,.08);
+transition:.45s;
 }
 
-@keyframes cardIn{
-    from{
-        opacity:0;
-        transform:translateY(35px) scale(.95);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
+.product-card::before{
+content:"";
+position:absolute;
+top:-80px;
+right:-80px;
+width:170px;
+height:170px;
+background:rgba(0,153,255,.12);
+border-radius:50%;
+transition:.5s;
 }
 
-.card:hover{
-    transform:translateY(-12px) rotateX(3deg);
-    border-color:rgba(0,163,255,.5);
-    box-shadow:
-        0 25px 55px rgba(0,130,220,.16),
-        0 0 30px rgba(0,180,255,.1);
+.product-card:hover{
+transform:translateY(-10px) rotateX(2deg);
+box-shadow:0 25px 55px rgba(0,126,255,.16);
+border-color:#bfe2ff;
 }
 
-.card::before{
-    content:"";
-    position:absolute;
-    width:180px;
-    height:180px;
-    top:-100px;
-    left:-80px;
-    background:rgba(0,174,255,.15);
-    border-radius:50%;
-    filter:blur(30px);
-    transition:.5s;
+.product-card:hover::before{
+transform:scale(1.4);
 }
 
-.card:hover::before{
-    transform:scale(2);
-}
-
-.card:nth-child(2)::before,
-.card:nth-child(4)::before{
-    background:rgba(255,193,7,.18);
-}
-
-.card-icon{
-    font-size:48px;
-    margin-bottom:12px;
-    display:block;
-    animation:iconFloat 3s ease-in-out infinite;
+.product-icon{
+position:relative;
+width:65px;
+height:65px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:19px;
+background:#edf8ff;
+font-size:34px;
+margin-bottom:20px;
+box-shadow:0 10px 25px rgba(0,126,255,.1);
+animation:iconFloat 3s infinite ease-in-out;
 }
 
 @keyframes iconFloat{
-    50%{
-        transform:translateY(-7px) rotate(3deg);
-    }
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-6px)}
 }
 
-.card h3{
-    font-size:19px;
-    margin-bottom:12px;
+.product-card h3{
+position:relative;
+font-size:18px;
+color:#17375e;
+margin-bottom:10px;
+}
+
+.product-amount{
+position:relative;
+font-size:14px;
+font-weight:800;
+color:#5e7795;
+background:#f2f8fd;
+padding:7px 10px;
+border-radius:10px;
+display:inline-block;
 }
 
 .price{
-    font-size:24px;
-    font-weight:900;
-    color:#008edc;
+position:relative;
+font-size:24px;
+font-weight:900;
+color:#087cff;
+margin:15px 0 20px;
 }
 
-.card:nth-child(5) .price,
-.card:nth-child(6) .price,
-.card:nth-child(7) .price{
-    color:#d79700;
+.price span{
+font-size:12px;
+color:#8192a8;
+font-weight:600;
 }
 
-.card:nth-child(8) .price{
-    color:#8b5de8;
+.order-button{
+width:100%;
+border:none;
+cursor:pointer;
+color:white;
+background:linear-gradient(135deg,#087cff,#00aaff);
+padding:12px;
+border-radius:14px;
+font-weight:800;
+transition:.3s;
+box-shadow:0 8px 20px rgba(0,126,255,.2);
 }
 
-.buy-btn{
-    display:block;
-    width:100%;
-    margin-top:20px;
-    text-align:center;
-    padding:11px;
-    border-radius:13px;
-    background:#edf9ff;
-    color:#007ec8;
-    text-decoration:none;
-    font-weight:800;
-    transition:.3s;
+.order-button:hover{
+transform:translateY(-3px);
+box-shadow:0 13px 28px rgba(0,126,255,.32);
 }
 
-.buy-btn:hover{
-    background:#008fdc;
-    color:white;
-    box-shadow:0 0 25px rgba(0,143,220,.35);
+.coins-section{
+background:
+radial-gradient(circle at 15% 20%,rgba(255,196,0,.12),transparent 30%),
+radial-gradient(circle at 85% 80%,rgba(255,174,0,.1),transparent 30%);
 }
 
+.coin-card{
+border-color:#f8e8aa;
+}
 
-/* =========================
-   STEPS
-========================= */
+.coin-card::before{
+background:rgba(255,196,0,.14);
+}
+
+.coin-card:hover{
+border-color:#f2d56a;
+box-shadow:0 25px 55px rgba(224,169,0,.16);
+}
+
+.coin-card .product-icon{
+background:#fff8dc;
+box-shadow:0 10px 25px rgba(224,169,0,.14);
+}
+
+.coin-card .product-amount{
+background:#fff9e6;
+color:#9b7410;
+}
+
+.coin-card .price{
+color:#d89b00;
+}
+
+.coin-card .order-button{
+background:linear-gradient(135deg,#e9ad00,#ffd34f);
+box-shadow:0 8px 20px rgba(225,170,0,.22);
+}
+
+.ticket-section{
+padding-top:40px;
+}
+
+.ticket-card{
+max-width:650px;
+margin:auto;
+position:relative;
+overflow:hidden;
+background:linear-gradient(135deg,#fffdf2,#fff8d8,#ffffff);
+border:2px solid #f2ce54;
+border-radius:30px;
+padding:40px;
+text-align:center;
+box-shadow:
+0 20px 60px rgba(220,169,0,.16),
+inset 0 0 30px rgba(255,215,80,.12);
+transition:.4s;
+}
+
+.ticket-card:hover{
+transform:translateY(-8px);
+box-shadow:
+0 30px 75px rgba(220,169,0,.24),
+inset 0 0 35px rgba(255,215,80,.18);
+}
+
+.ticket-card::before{
+content:"";
+position:absolute;
+width:300px;
+height:300px;
+background:radial-gradient(circle,rgba(255,204,0,.22),transparent 70%);
+top:-170px;
+left:-100px;
+}
+
+.ticket-icon{
+font-size:75px;
+animation:ticketFloat 3s infinite ease-in-out;
+}
+
+@keyframes ticketFloat{
+0%,100%{
+transform:translateY(0) rotate(-2deg);
+}
+50%{
+transform:translateY(-10px) rotate(2deg);
+}
+}
+
+.ticket-card h3{
+margin-top:15px;
+font-size:29px;
+font-weight:900;
+color:#7d5b00;
+}
+
+.ticket-name{
+display:inline-block;
+margin-top:10px;
+padding:8px 18px;
+border-radius:50px;
+background:rgba(255,210,65,.25);
+color:#8a6500;
+font-size:15px;
+font-weight:900;
+animation:nameGlow 2s infinite alternate;
+}
+
+@keyframes nameGlow{
+from{
+box-shadow:0 0 0 rgba(255,196,0,0);
+transform:scale(1);
+}
+to{
+box-shadow:0 0 22px rgba(255,196,0,.35);
+transform:scale(1.03);
+}
+}
+
+.ticket-card p{
+color:#887443;
+margin-top:14px;
+line-height:2;
+}
+
+.ticket-deadline{
+margin-top:18px;
+color:#8b6900;
+font-size:14px;
+font-weight:800;
+}
+
+.countdown{
+margin:18px auto 22px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+max-width:480px;
+}
+
+.time-box{
+background:rgba(255,255,255,.8);
+border:1px solid #f0d875;
+border-radius:17px;
+padding:13px 5px;
+box-shadow:0 8px 20px rgba(214,164,0,.1);
+animation:timePulse 2s infinite ease-in-out;
+}
+
+.time-box:nth-child(2){animation-delay:.15s}
+.time-box:nth-child(3){animation-delay:.3s}
+.time-box:nth-child(4){animation-delay:.45s}
+
+@keyframes timePulse{
+0%,100%{
+transform:translateY(0);
+box-shadow:0 8px 20px rgba(214,164,0,.1);
+}
+50%{
+transform:translateY(-4px);
+box-shadow:0 12px 28px rgba(214,164,0,.2);
+}
+}
+
+.time-number{
+display:block;
+font-size:24px;
+font-weight:900;
+color:#c28b00;
+}
+
+.time-label{
+display:block;
+margin-top:3px;
+font-size:11px;
+color:#9a8551;
+font-weight:700;
+}
+
+.ticket-price{
+font-size:32px;
+font-weight:900;
+color:#d69b00;
+margin:20px 0;
+}
+
+.ticket-button{
+width:100%;
+border:none;
+padding:15px;
+border-radius:16px;
+cursor:pointer;
+font-weight:900;
+font-size:15px;
+color:#563d00;
+background:linear-gradient(135deg,#ffd447,#fff0a4,#ffc400);
+box-shadow:0 10px 30px rgba(218,165,0,.25);
+transition:.3s;
+}
+
+.ticket-button:hover{
+transform:translateY(-4px);
+box-shadow:0 17px 38px rgba(218,165,0,.35);
+}
+
+.special{
+margin:20px auto 0;
+max-width:1050px;
+border-radius:30px;
+padding:35px;
+background:linear-gradient(135deg,#087cff,#00aaff);
+color:white;
+position:relative;
+overflow:hidden;
+box-shadow:0 25px 60px rgba(0,126,255,.2);
+}
+
+.special::after{
+content:"";
+position:absolute;
+width:250px;
+height:250px;
+border-radius:50%;
+background:rgba(255,255,255,.1);
+left:-80px;
+top:-100px;
+}
+
+.special-content{
+position:relative;
+z-index:2;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:25px;
+}
+
+.special h3{
+font-size:27px;
+font-weight:900;
+}
+
+.special p{
+margin-top:8px;
+opacity:.9;
+line-height:1.9;
+}
+
+.special .btn{
+background:white;
+color:#087cff;
+white-space:nowrap;
+}
 
 .steps{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
 }
 
 .step{
-    padding:30px;
-    border-radius:24px;
-    background:rgba(255,255,255,.72);
-    border:1px solid rgba(0,140,220,.12);
-    text-align:center;
-    transition:.4s;
+text-align:center;
+background:white;
+border-radius:23px;
+padding:30px 20px;
+border:1px solid #e8f1f9;
+box-shadow:0 10px 30px rgba(30,90,140,.07);
+transition:.35s;
 }
 
 .step:hover{
-    transform:translateY(-8px);
-    box-shadow:0 20px 45px rgba(0,140,220,.13);
+transform:translateY(-7px);
 }
 
 .step-number{
-    width:55px;
-    height:55px;
-    margin:0 auto 18px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:linear-gradient(135deg,#00aaff,#006bc0);
-    color:#fff;
-    font-size:22px;
-    font-weight:900;
-    box-shadow:0 0 25px rgba(0,150,240,.35);
+width:55px;
+height:55px;
+margin:auto;
+border-radius:17px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,#087cff,#00adff);
+color:white;
+font-size:21px;
+font-weight:900;
+box-shadow:0 10px 25px rgba(0,126,255,.22);
 }
 
-
-/* =========================
-   NOTICE
-========================= */
-
-.notice{
-    position:relative;
-    padding:28px;
-    border-radius:25px;
-    background:linear-gradient(135deg,#fff8dd,#fff);
-    border:1px solid rgba(235,178,0,.35);
-    box-shadow:0 20px 50px rgba(220,170,0,.1);
-    overflow:hidden;
+.step h3{
+margin-top:17px;
+font-size:18px;
 }
 
-.notice::after{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:70%;
-    height:100%;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.9),
-        transparent
-    );
-    transform:skewX(-20deg);
-    animation:shine 4s infinite;
+.step p{
+margin-top:8px;
+color:#73869d;
+line-height:1.9;
+font-size:14px;
 }
 
-@keyframes shine{
-    0%,60%{
-        left:-100%;
-    }
-    100%{
-        left:140%;
-    }
+.announcement{
+max-width:1050px;
+margin:auto;
+padding:25px;
+background:white;
+border:1px solid #e3effa;
+border-radius:23px;
+box-shadow:0 10px 30px rgba(30,90,140,.07);
+display:flex;
+align-items:center;
+gap:18px;
 }
 
-.notice strong{
-    color:#b17b00;
+.announcement-icon{
+min-width:55px;
+height:55px;
+border-radius:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#edf7ff;
+font-size:27px;
 }
 
-.notice p{
-    line-height:2;
-    margin-top:8px;
+.announcement h3{
+font-size:17px;
+color:#17375e;
 }
 
-
-/* =========================
-   CTA
-========================= */
-
-.cta{
-    text-align:center;
-    padding:60px 25px;
-    border-radius:35px;
-    background:
-        radial-gradient(circle at 20% 20%,rgba(0,196,255,.25),transparent 35%),
-        radial-gradient(circle at 80% 80%,rgba(255,193,7,.22),transparent 35%),
-        linear-gradient(135deg,#eaf9ff,#fff8df);
-    border:1px solid rgba(0,150,230,.15);
-    box-shadow:0 25px 70px rgba(0,100,180,.12);
+.announcement p{
+margin-top:6px;
+color:#73869d;
+line-height:1.8;
+font-size:14px;
 }
 
-.cta h2{
-    font-size:38px;
-    margin-bottom:12px;
+.faq{
+max-width:900px;
+margin:auto;
 }
 
-.cta p{
-    color:#62788c;
-    margin-bottom:25px;
+details{
+background:white;
+border:1px solid #e3eef8;
+border-radius:17px;
+margin-bottom:12px;
+padding:17px 20px;
+box-shadow:0 8px 22px rgba(30,90,140,.05);
 }
 
+summary{
+cursor:pointer;
+font-weight:800;
+color:#17375e;
+}
 
-/* =========================
-   FOOTER
-========================= */
+details p{
+color:#71839b;
+line-height:2;
+margin-top:13px;
+font-size:14px;
+}
+
+.support{
+text-align:center;
+background:linear-gradient(135deg,#f2f9ff,#ffffff);
+border:1px solid #dceefe;
+border-radius:30px;
+padding:45px 20px;
+}
+
+.support h2{
+font-size:30px;
+font-weight:900;
+}
+
+.support p{
+color:#71839b;
+margin:10px 0 22px;
+}
 
 footer{
-    margin-top:60px;
-    padding:35px 20px;
-    text-align:center;
-    background:#edf8ff;
-    border-top:1px solid rgba(0,140,220,.12);
+margin-top:40px;
+padding:35px 20px;
+text-align:center;
+background:#f5faff;
+border-top:1px solid #e2eef9;
 }
 
 footer strong{
-    color:#008ee0;
+color:#087cff;
 }
 
-.footer-rubika{
-    display:inline-block;
-    margin-top:10px;
-    color:#007ec8;
-    font-weight:800;
-    text-decoration:none;
+footer p{
+color:#7c8ea3;
+margin-top:8px;
+font-size:13px;
 }
 
-
-/* =========================
-   SCROLL REVEAL
-========================= */
-
-.reveal{
-    opacity:0;
-    transform:translateY(45px);
-    transition:1s;
+footer a{
+color:#087cff;
+text-decoration:none;
+font-weight:800;
 }
 
-.reveal.show{
-    opacity:1;
-    transform:translateY(0);
+.floating-order{
+position:fixed;
+left:20px;
+bottom:20px;
+z-index:999;
+width:58px;
+height:58px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+background:linear-gradient(135deg,#087cff,#00b0ff);
+color:white;
+font-size:24px;
+box-shadow:0 12px 30px rgba(0,126,255,.3);
+animation:floatingPulse 2s infinite;
 }
 
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:1000px){
-
-    .products{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .hero{
-        flex-direction:column;
-        text-align:center;
-    }
-
-    .hero-buttons{
-        justify-content:center;
-    }
-
-    .hero-art{
-        width:300px;
-        height:300px;
-    }
-
-    .steps{
-        grid-template-columns:1fr;
-    }
+@keyframes floatingPulse{
+0%,100%{
+transform:scale(1);
+box-shadow:0 12px 30px rgba(0,126,255,.3);
+}
+50%{
+transform:scale(1.08);
+box-shadow:0 15px 40px rgba(0,126,255,.48);
+}
 }
 
-@media(max-width:600px){
-
-    header{
-        padding:12px 4%;
-    }
-
-    .nav{
-        justify-content:center;
-    }
-
-    .nav-links{
-        display:none;
-    }
-
-    .logo{
-        font-size:22px;
-    }
-
-    .hero{
-        min-height:auto;
-        padding-top:60px;
-    }
-
-    .hero h1{
-        font-size:48px;
-    }
-
-    .hero h2{
-        font-size:21px;
-    }
-
-    .hero p{
-        font-size:14px;
-    }
-
-    .hero-art{
-        width:270px;
-        height:270px;
-    }
-
-    .orb{
-        width:185px;
-        height:185px;
-    }
-
-    .orb-text{
-        font-size:58px;
-    }
-
-    section{
-        padding:60px 5%;
-    }
-
-    .section-title h2{
-        font-size:29px;
-    }
-
-    .products{
-        grid-template-columns:1fr;
-    }
-
-    .card{
-        min-height:auto;
-    }
-
-    .cta h2{
-        font-size:29px;
-    }
-
-    .btn{
-        width:100%;
-    }
-
-    .hero-buttons{
-        width:100%;
-    }
-
-    .loadingBox{
-        padding:38px 22px;
-    }
-
-    .loadingBox h2{
-        font-size:21px;
-    }
+.loader-screen{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at center,rgba(0,153,255,.1),transparent 40%),
+rgba(255,255,255,.98);
+backdrop-filter:blur(12px);
+z-index:99999;
+display:none;
+align-items:center;
+justify-content:center;
+flex-direction:column;
 }
 
+.loader-screen.active{
+display:flex;
+}
+
+.loader-diamond{
+font-size:75px;
+animation:loaderDiamond 1.2s infinite ease-in-out;
+filter:drop-shadow(0 0 20px rgba(0,153,255,.45));
+}
+
+@keyframes loaderDiamond{
+0%,100%{
+transform:translateY(0) scale(1);
+}
+50%{
+transform:translateY(-15px) scale(1.12);
+}
+}
+
+.loader-screen h3{
+margin-top:20px;
+color:#17375e;
+font-size:20px;
+}
+
+.loader-dots{
+display:flex;
+gap:7px;
+margin-top:13px;
+}
+
+.loader-dots span{
+width:8px;
+height:8px;
+background:#087cff;
+border-radius:50%;
+animation:dot 1s infinite;
+}
+
+.loader-dots span:nth-child(2){animation-delay:.15s}
+.loader-dots span:nth-child(3){animation-delay:.3s}
+
+@keyframes dot{
+0%,100%{
+transform:translateY(0);
+opacity:.35;
+}
+50%{
+transform:translateY(-6px);
+opacity:1;
+}
+}
+
+.progress{
+margin-top:22px;
+width:min(300px,80vw);
+height:6px;
+border-radius:10px;
+background:#e5f1fb;
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0;
+border-radius:10px;
+background:linear-gradient(90deg,#087cff,#00b4ff);
+animation:progress 5s linear forwards;
+}
+
+@keyframes progress{
+from{width:0}
+to{width:100%}
+}
+
+@media(max-width:1050px){
+.products{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:850px){
+.hero{
+grid-template-columns:1fr;
+text-align:center;
+padding-top:50px;
+}
+
+.hero p{
+margin-left:auto;
+margin-right:auto;
+}
+
+.hero-buttons{
+justify-content:center;
+}
+
+.hero-visual{
+height:350px;
+}
+
+.steps{
+grid-template-columns:1fr;
+}
+
+.special-content{
+flex-direction:column;
+text-align:center;
+}
+}
+
+@media(max-width:650px){
+.navbar{
+flex-direction:column;
+padding:12px 15px;
+}
+
+nav{
+width:100%;
+}
+
+nav a{
+font-size:12px;
+padding:8px 9px;
+}
+
+.top-notice{
+font-size:11px;
+line-height:1.8;
+}
+
+.hero{
+min-height:auto;
+padding:50px 18px 60px;
+}
+
+.hero h1{
+font-size:55px;
+}
+
+.hero h2{
+font-size:26px;
+}
+
+.hero p{
+font-size:14px;
+}
+
+.hero-visual{
+height:290px;
+}
+
+.diamond{
+width:125px;
+height:125px;
+}
+
+.diamond::before{
+font-size:75px;
+}
+
+.orbit{
+width:240px;
+height:240px;
+}
+
+.products{
+grid-template-columns:1fr;
+}
+
+.section{
+padding:60px 15px;
+}
+
+.section-head h2{
+font-size:27px;
+}
+
+.ticket-card{
+padding:30px 20px;
+}
+
+.ticket-card h3{
+font-size:25px;
+}
+
+.countdown{
+gap:6px;
+}
+
+.time-box{
+padding:11px 3px;
+}
+
+.time-number{
+font-size:20px;
+}
+
+.time-label{
+font-size:10px;
+}
+
+.special{
+padding:28px 20px;
+}
+
+.announcement{
+align-items:flex-start;
+}
+
+.floating-order{
+left:15px;
+bottom:15px;
+}
+}
 </style>
 </head>
 
 <body>
 
-
-<!-- =========================
-     LOADING SCREEN
-========================= -->
-
-<div id="loadingScreen">
-
-    <div class="loadingBox">
-
-        <span class="loadingDiamond">💎</span>
-
-        <h2>
-            در حال انتقال به صفحه ثبت سفارش هستید …
-        </h2>
-
-        <p>
-            لطفاً چند لحظه صبر کنید
-        </p>
-
-        <div class="loadingDots">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <div class="loadingBar">
-            <div class="loadingProgress"></div>
-        </div>
-
-        <p style="margin-top:12px;font-size:12px;">
-            انتقال تا ۵ ثانیه دیگر انجام می‌شود
-        </p>
-
-    </div>
-
+<div class="top-notice">
+سایت امیر جم تقدیم میکند . برای خرید الماس . سکه و یا بلیط طلایی بازی همین الان خرید کنید تا زیر ۲۰ دقیقه وارد حسابتون بشه . همین الان از محصولات ما دیدن کنید .
 </div>
-
-
-<!-- =========================
-     PARTICLES
-========================= -->
 
 <div class="particles">
-
-    <span class="particle"></span>
-    <span class="particle"></span>
-    <span class="particle"></span>
-    <span class="particle"></span>
-    <span class="particle"></span>
-    <span class="particle"></span>
-    <span class="particle"></span>
-    <span class="particle"></span>
-    <span class="particle"></span>
-    <span class="particle"></span>
-
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
 </div>
 
+<div class="loader-screen" id="loader">
 
-<!-- =========================
-     HEADER
-========================= -->
+<div class="loader-diamond">💎</div>
+
+<h3>
+در حال انتقال به صفحه ثبت سفارش هستید
+</h3>
+
+<div class="loader-dots">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<div class="progress">
+<div class="progress-bar"></div>
+</div>
+
+</div>
 
 <header>
 
-    <div class="nav">
+<div class="navbar">
 
-        <div class="logo">
-            💎 امیر <span>جم</span>
-        </div>
+<a href="#home" class="logo">
+<span class="logo-icon">💎</span>
+امیر جم
+</a>
 
-        <div class="nav-links">
+<nav>
+<a href="#diamonds">💎 الماس</a>
+<a href="#coins">🪙 سکه</a>
+<a href="#ticket">🎫 بلیط طلایی</a>
+<a href="#steps">📦 راهنما</a>
+<a href="#faq">❓ سوالات</a>
+</nav>
 
-            <a href="#products">
-                محصولات
-            </a>
-
-            <a href="#how">
-                راهنما
-            </a>
-
-            <a href="#order">
-                ثبت سفارش
-            </a>
-
-        </div>
-
-    </div>
+</div>
 
 </header>
 
+<section class="hero" id="home">
 
-<!-- =========================
-     MAIN
-========================= -->
+<div class="hero-text">
 
-<main>
+<span class="badge">
+✨ فروش جم و سکه پسرخوانده
+</span>
+
+<h1>
+امیر جم
+</h1>
+
+<h2>
+جم، سکه و بلیط طلایی
+</h2>
+
+<p>
+محصولات مورد نیازت برای بازی پسرخوانده را با یک سفارش ساده تهیه کن.
+محصولت را انتخاب کن، سفارش را ثبت کن و منتظر دریافت آن در حسابت باش.
+</p>
+
+<div class="hero-buttons">
+
+<button class="btn btn-primary order-button">
+🛒 همین الان خرید کن
+</button>
+
+<a href="#diamonds" class="btn btn-secondary">
+👀 دیدن محصولات
+</a>
+
+</div>
+
+</div>
+
+<div class="hero-visual">
+
+<div class="glow"></div>
+
+<div class="orbit">
+<span>💎</span>
+<span>🪙</span>
+<span>🎫</span>
+<span>✨</span>
+</div>
+
+<div class="diamond"></div>
+
+</div>
+
+</section>
+
+<!-- بخش الماس -->
+
+<section class="section" id="diamonds">
+
+<div class="section-head">
+
+<span class="mini">
+💎 بخش الماس
+</span>
+
+<h2>
+بسته‌های الماس
+</h2>
+
+<p>
+الماس مورد نیازت را انتخاب کن و سفارش بده
+</p>
+
+</div>
+
+<div class="products">
+
+<div class="product-card">
+
+<div class="product-icon">
+💎
+</div>
+
+<h3>
+یک مثقال الماس
+</h3>
+
+<div class="product-amount">
+۲۰۰ جم
+</div>
+
+<div class="price">
+۱۷,۹۰۰
+<span>
+تومان
+</span>
+</div>
+
+<button class="order-button">
+سفارش محصول
+</button>
+
+</div>
 
 
-<!-- HERO -->
+<div class="product-card">
 
-<section class="hero">
+<div class="product-icon">
+💎
+</div>
 
-    <div class="hero-content">
+<h3>
+یک مشت الماس
+</h3>
 
-        <div class="badge">
-            فروش جم و سکه پسرخوانده
-        </div>
+<div class="product-amount">
+۵۰۰ جم
+</div>
 
-        <h1>
-            امیر جم
-        </h1>
+<div class="price">
+۳۲,۹۰۰
+<span>
+تومان
+</span>
+</div>
 
-        <h2>
-            جم و سکه پسرخوانده
-            <br>
-            سریع، ساده و مطمئن
-        </h2>
+<button class="order-button">
+سفارش محصول
+</button>
 
-        <p>
-            محصولات مورد نیازت را انتخاب کن،
-            سفارش را ثبت کن و سپس رسید واریزی را
-            برای ما ارسال کن.
-        </p>
-
-        <div class="hero-buttons">
-
-            <a
-                href="#products"
-                class="btn btn-primary">
-
-                💎 مشاهده محصولات
-
-            </a>
-
-            <button
-                class="btn btn-gold order-button">
-
-                🎫 ثبت سفارش
-
-            </button>
-
-        </div>
-
-    </div>
+</div>
 
 
-    <div class="hero-art">
+<div class="product-card">
 
-        <div class="orb">
+<div class="product-icon">
+💎
+</div>
 
-            <div class="orb-text">
-                💎
-            </div>
+<h3>
+یک کیسه الماس
+</h3>
 
-        </div>
+<div class="product-amount">
+۱۲۰۰ جم
+</div>
 
-    </div>
+<div class="price">
+۶۲,۹۰۰
+<span>
+تومان
+</span>
+</div>
+
+<button class="order-button">
+سفارش محصول
+</button>
+
+</div>
+
+
+<div class="product-card">
+
+<div class="product-icon">
+💎
+</div>
+
+<h3>
+یک چمدان الماس
+</h3>
+
+<div class="product-amount">
+۲۵۰۰ جم
+</div>
+
+<div class="price">
+۱۲۲,۹۰۰
+<span>
+تومان
+</span>
+</div>
+
+<button class="order-button">
+سفارش محصول
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 
-<!-- PRODUCTS -->
+<!-- بخش سکه -->
 
-<section
-    id="products"
-    class="reveal">
+<section class="section coins-section" id="coins">
 
-    <div class="section-title">
+<div class="section-head">
 
-        <h2>
-            فروشگاه امیر جم
-        </h2>
+<span class="mini" style="color:#c58a00;background:#fff8df;">
+🪙 بخش سکه
+</span>
 
-        <p>
-            محصول مورد نظرت را انتخاب کن
-        </p>
+<h2>
+بسته‌های سکه
+</h2>
 
-    </div>
+<p>
+بسته سکه مورد نظرت را انتخاب کن
+</p>
 
+</div>
 
-    <div class="products">
+<div class="products">
 
+<div class="product-card coin-card">
 
-        <!-- 1 -->
+<div class="product-icon">
+🪙
+</div>
 
-        <div class="card">
+<h3>
+یک مشت سکه
+</h3>
 
-            <span class="card-icon">
-                💎
-            </span>
+<div class="product-amount">
+۱۰,۰۰۰ سکه
+</div>
 
-            <h3>
-                یک مثقال الماس
-            </h3>
+<div class="price">
+۴۲,۹۰۰
+<span>
+تومان
+</span>
+</div>
 
-            <div class="price">
-                ۱۷٬۹۰۰ تومان
-            </div>
+<button class="order-button">
+سفارش محصول
+</button>
 
-            <button
-                class="buy-btn order-button">
+</div>
 
-                سفارش محصول
 
-            </button>
+<div class="product-card coin-card">
 
-        </div>
+<div class="product-icon">
+🪙
+</div>
 
+<h3>
+یک چمدان سکه
+</h3>
 
-        <!-- 2 -->
+<div class="product-amount">
+۵۰,۰۰۰ سکه
+</div>
 
-        <div class="card">
+<div class="price">
+۱۲۲,۹۰۰
+<span>
+تومان
+</span>
+</div>
 
-            <span class="card-icon">
-                💎
-            </span>
+<button class="order-button">
+سفارش محصول
+</button>
 
-            <h3>
-                یک مشت الماس
-            </h3>
+</div>
 
-            <div class="price">
-                ۳۲٬۹۰۰ تومان
-            </div>
 
-            <button
-                class="buy-btn order-button">
+<div class="product-card coin-card">
 
-                سفارش محصول
+<div class="product-icon">
+🪙
+</div>
 
-            </button>
+<h3>
+یک گاوصندوق سکه
+</h3>
 
-        </div>
+<div class="product-amount">
+۱۰۰,۰۰۰ سکه
+</div>
 
+<div class="price">
+۲۲۷,۹۰۰
+<span>
+تومان
+</span>
+</div>
 
-        <!-- 3 -->
+<button class="order-button">
+سفارش محصول
+</button>
 
-        <div class="card">
+</div>
 
-            <span class="card-icon">
-                💎
-            </span>
-
-            <h3>
-                یک کیسه الماس
-            </h3>
-
-            <div class="price">
-                ۶۲٬۹۰۰ تومان
-            </div>
-
-            <button
-                class="buy-btn order-button">
-
-                سفارش محصول
-
-            </button>
-
-        </div>
-
-
-        <!-- 4 -->
-
-        <div class="card">
-
-            <span class="card-icon">
-                💎
-            </span>
-
-            <h3>
-                یک چمدان الماس
-            </h3>
-
-            <div class="price">
-                ۱۲۲٬۹۰۰ تومان
-            </div>
-
-            <button
-                class="buy-btn order-button">
-
-                سفارش محصول
-
-            </button>
-
-        </div>
-
-
-        <!-- 5 -->
-
-        <div class="card">
-
-            <span class="card-icon">
-                🪙
-            </span>
-
-            <h3>
-                یک مشت سکه
-            </h3>
-
-            <div class="price">
-                ۴۲٬۹۰۰ تومان
-            </div>
-
-            <button
-                class="buy-btn order-button">
-
-                سفارش محصول
-
-            </button>
-
-        </div>
-
-
-        <!-- 6 -->
-
-        <div class="card">
-
-            <span class="card-icon">
-                🪙
-            </span>
-
-            <h3>
-                یک چمدان سکه
-            </h3>
-
-            <div class="price">
-                ۱۲۲٬۹۰۰ تومان
-            </div>
-
-            <button
-                class="buy-btn order-button">
-
-                سفارش محصول
-
-            </button>
-
-        </div>
-
-
-        <!-- 7 -->
-
-        <div class="card">
-
-            <span class="card-icon">
-                🪙
-            </span>
-
-            <h3>
-                یک گاوصندوق سکه
-            </h3>
-
-            <div class="price">
-                ۲۲۷٬۹۰۰ تومان
-            </div>
-
-            <button
-                class="buy-btn order-button">
-
-                سفارش محصول
-
-            </button>
-
-        </div>
-
-
-        <!-- 8 -->
-
-        <div class="card">
-
-            <span class="card-icon">
-                🎫
-            </span>
-
-            <h3>
-                بلیط طلایی
-            </h3>
-
-            <div class="price">
-                ۵۲٬۹۰۰ تومان
-            </div>
-
-            <button
-                class="buy-btn order-button">
-
-                سفارش محصول
-
-            </button>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- HOW -->
+<!-- بلیط طلایی -->
 
-<section
-    id="how"
-    class="reveal">
+<section class="section ticket-section" id="ticket">
 
-    <div class="section-title">
+<div class="section-head">
 
-        <h2>
-            چطور سفارش بدهم؟
-        </h2>
+<span class="mini" style="color:#c58a00;background:#fff8df;">
+🎫 محصول ویژه
+</span>
 
-        <p>
-            در سه مرحله ساده
-        </p>
+<h2>
+بلیط طلایی فصل ۶۰
+</h2>
 
-    </div>
+<p>
+بلیط طلایی فصل ۶۰ را از امیر جم تهیه کن
+</p>
 
+</div>
 
-    <div class="steps">
+<div class="ticket-card">
 
+<div class="ticket-icon">
+🎫
+</div>
 
-        <div class="step">
+<h3>
+بلیط طلایی فصل ۶۰
+</h3>
 
-            <div class="step-number">
-                ۱
-            </div>
+<div class="ticket-name">
+نام : رقص آخر
+</div>
 
-            <h3>
-                محصول را انتخاب کن
-            </h3>
+<p>
+مهلت خرید این بلیط طلایی ۱۴ روز است.
+</p>
 
-            <p>
-                از فروشگاه بالا محصول مورد نظرت را انتخاب کن.
-            </p>
+<div class="ticket-deadline">
+⏳ زمان باقی‌مانده تا پایان مهلت خرید
+</div>
 
-        </div>
+<div class="countdown">
 
+<div class="time-box">
+<span class="time-number" id="days">14</span>
+<span class="time-label">روز</span>
+</div>
 
-        <div class="step">
+<div class="time-box">
+<span class="time-number" id="hours">00</span>
+<span class="time-label">ساعت</span>
+</div>
 
-            <div class="step-number">
-                ۲
-            </div>
+<div class="time-box">
+<span class="time-number" id="minutes">00</span>
+<span class="time-label">دقیقه</span>
+</div>
 
-            <h3>
-                فرم سفارش را پر کن
-            </h3>
+<div class="time-box">
+<span class="time-number" id="seconds">00</span>
+<span class="time-label">ثانیه</span>
+</div>
 
-            <p>
-                روی ثبت سفارش بزن و اطلاعات لازم را وارد کن.
-            </p>
+</div>
 
-        </div>
+<div class="ticket-price">
+۵۲,۹۰۰ تومان
+</div>
 
+<button class="ticket-button order-button">
+🎫 سفارش بلیط طلایی
+</button>
 
-        <div class="step">
-
-            <div class="step-number">
-                ۳
-            </div>
-
-            <h3>
-                رسید را ارسال کن
-            </h3>
-
-            <p>
-                رسید واریزی را در روبیکا برای ما ارسال کن.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- NOTICE -->
-
-<section class="reveal">
-
-    <div class="notice">
-
-        <h3>
-            ⚠️ نکته مهم قبل از سفارش
-        </h3>
-
-        <p>
-            رسید واریزی حتماً باید به آیدی
-            <strong>
-                amirtbpedit@
-            </strong>
-            در روبیکا ارسال شود.
-        </p>
-
-        <p>
-            همچنین برای امنیت، رمز عبور حساب‌های شخصی خود را
-            در اختیار افراد ناشناس قرار نده.
-        </p>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- CTA -->
+<section class="section">
 
-<section
-    id="order"
-    class="reveal">
+<div class="special">
 
-    <div class="cta">
+<div class="special-content">
 
-        <h2>
-            آماده‌ای سفارشت رو ثبت کنی؟ 💎
-        </h2>
+<div>
 
-        <p>
-            محصولت رو انتخاب کن و سفارش رو ثبت کن.
-        </p>
+<h3>
+🔥 آماده خریدی؟
+</h3>
 
-        <button
-            class="btn btn-primary order-button">
+<p>
+محصول مورد نظرت را انتخاب کن و سفارش خودت را ثبت کن.
+</p>
 
-            🎫 ثبت سفارش در فرم
+</div>
 
-        </button>
+<button class="btn order-button">
+🛒 ثبت سفارش
+</button>
 
-    </div>
+</div>
+
+</div>
 
 </section>
 
-</main>
+
+<section class="section" id="steps">
+
+<div class="section-head">
+
+<span class="mini">
+📦 راهنمای خرید
+</span>
+
+<h2>
+مراحل سفارش
+</h2>
+
+<p>
+خرید از امیر جم خیلی ساده است
+</p>
+
+</div>
+
+<div class="steps">
+
+<div class="step">
+
+<div class="step-number">
+۱
+</div>
+
+<h3>
+محصول را انتخاب کن
+</h3>
+
+<p>
+از بین الماس، سکه یا بلیط طلایی محصول مورد نظرت را انتخاب کن.
+</p>
+
+</div>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
+<div class="step">
+
+<div class="step-number">
+۲
+</div>
+
+<h3>
+سفارش را ثبت کن
+</h3>
+
+<p>
+روی سفارش محصول بزن و اطلاعات لازم را در فرم ثبت سفارش وارد کن.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+۳
+</div>
+
+<h3>
+دریافت محصول
+</h3>
+
+<p>
+پس از بررسی سفارش، محصول طبق اطلاعات ثبت‌شده برای حسابت ارسال می‌شود.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="announcement">
+
+<div class="announcement-icon">
+📢
+</div>
+
+<div>
+
+<h3>
+اطلاعیه امیر جم
+</h3>
+
+<p>
+برای خرید الماس، سکه و یا بلیط طلایی بازی همین الان خرید کنید تا زیر ۲۰ دقیقه وارد حسابتون بشه.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="faq">
+
+<div class="section-head">
+
+<span class="mini">
+❓ سوالات متداول
+</span>
+
+<h2>
+سوالات متداول
+</h2>
+
+<p>
+پاسخ چند سؤال مهم درباره سفارش
+</p>
+
+</div>
+
+<div class="faq">
+
+<details>
+
+<summary>
+چطور سفارش ثبت کنم؟
+</summary>
+
+<p>
+محصول مورد نظرت را انتخاب کن و روی دکمه سفارش محصول بزن.
+سپس به فرم ثبت سفارش منتقل می‌شوی.
+</p>
+
+</details>
+
+
+<details>
+
+<summary>
+چقدر طول می‌کشد محصول وارد حساب شود؟
+</summary>
+
+<p>
+طبق اطلاعیه سایت، سفارش‌ها هدف‌گذاری شده‌اند که زیر ۲۰ دقیقه وارد حساب شوند.
+</p>
+
+</details>
+
+
+<details>
+
+<summary>
+چه محصولاتی در امیر جم موجود است؟
+</summary>
+
+<p>
+بسته‌های الماس، بسته‌های سکه و بلیط طلایی در سایت قرار گرفته‌اند.
+</p>
+
+</details>
+
+
+<details>
+
+<summary>
+برای پیگیری سفارش چه کار کنم؟
+</summary>
+
+<p>
+برای پیگیری سفارش می‌توانی از طریق آیدی روبیکای پشتیبانی با ما در ارتباط باشی.
+</p>
+
+</details>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="support">
+
+<h2>
+🎧 پشتیبانی امیر جم
+</h2>
+
+<p>
+برای پیگیری سفارش یا دریافت راهنمایی با پشتیبانی در روبیکا در ارتباط باش.
+</p>
+
+<a
+class="btn btn-primary"
+href="https://rubika.ir/amirtbpedit"
+target="_blank"
+>
+💬 پشتیبانی در روبیکا
+</a>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="special">
+
+<div class="special-content">
+
+<div>
+
+<h3>
+💎 امیر جم
+</h3>
+
+<p>
+الماس، سکه و بلیط طلایی پسرخوانده
+</p>
+
+</div>
+
+<button class="btn order-button">
+🛒 همین الان سفارش بده
+</button>
+
+</div>
+
+</div>
+
+</section>
+
 
 <footer>
 
-    <div>
-        ساخته شده توسط
-        <strong>
-            امیر حسین جبارفر
-        </strong>
-    </div>
+<strong>
+💎 امیر جم
+</strong>
 
-    <a
-        class="footer-rubika"
-        href="https://rubika.ir/amirtbpedit"
-        target="_blank">
+<p>
+فروش جم، سکه و بلیط طلایی بازی پسرخوانده
+</p>
 
-        📱 ارتباط در روبیکا: @amirtbpedit
+<p>
+ساخته شده توسط: امیر حسین جبارفر
+</p>
 
-    </a>
-
-    <p
-        style="margin-top:15px;color:#7890a5;font-size:13px;">
-
-        © 2026 Amir Jam
-
-    </p>
+<p>
+پشتیبانی:
+<a
+href="https://rubika.ir/amirtbpedit"
+target="_blank"
+>
+@amirtbpedit
+</a>
+</p>
 
 </footer>
 
 
+<button
+class="floating-order order-button"
+title="ثبت سفارش"
+>
+🛒
+</button>
+
+
 <script>
-
-
-/* =========================
-   BASEROW LINK
-========================= */
 
 const orderURL =
 "https://baserow.io/form/f-q4KFn2UHJoMt77bTvvdrcaPDsCKiPt2PkDBkJOsic";
 
-
-/* =========================
-   5 SECOND LOADING
-========================= */
-
-const loadingScreen =
-document.getElementById("loadingScreen");
+const loader =
+document.getElementById("loader");
 
 
 document
 .querySelectorAll(".order-button")
-.forEach(button => {
-
-    button.addEventListener("click", function(){
-
-        /* نمایش لودینگ */
-
-        loadingScreen.classList.add("active");
-
-        /* جلوگیری از اسکرول */
-
-        document.body.style.overflow = "hidden";
-
-        /* انتقال بعد از ۵ ثانیه */
-
-        setTimeout(function(){
-
-            window.location.href = orderURL;
-
-        },5000);
-
-    });
-
-});
-
-
-/* =========================
-   SCROLL REVEAL
-========================= */
-
-const reveals =
-document.querySelectorAll(".reveal");
-
-
-const observer =
-new IntersectionObserver(
-
-    entries => {
-
-        entries.forEach(entry => {
-
-            if(entry.isIntersecting){
-
-                entry.target.classList.add("show");
-
-            }
-
-        });
-
-    },
-
-    {
-        threshold:.12
-    }
-
-);
-
-
-reveals.forEach(el =>
-    observer.observe(el)
-);
-
-
-/* =========================
-   CARD DELAY
-========================= */
-
-document
-.querySelectorAll(".card")
-.forEach((card,index)=>{
-
-    card.style.animationDelay =
-        `${index * .08}s`;
-
-});
-
-
-/* =========================
-   3D CARD MOUSE EFFECT
-========================= */
-
-document
-.querySelectorAll(".card")
-.forEach(card=>{
-
-
-    card.addEventListener(
-        "mousemove",
-        function(e){
-
-            const rect =
-                card.getBoundingClientRect();
-
-            const x =
-                e.clientX - rect.left;
-
-            const y =
-                e.clientY - rect.top;
-
-            const rotateY =
-                (x / rect.width - .5) * 8;
-
-            const rotateX =
-                (y / rect.height - .5) * -8;
-
-
-            card.style.transform =
-                `translateY(-12px)
-                 rotateX(${rotateX}deg)
-                 rotateY(${rotateY}deg)`;
-
-        }
-    );
-
-
-    card.addEventListener(
-        "mouseleave",
-        function(){
-
-            card.style.transform = "";
-
-        }
-    );
-
-});
-
-
-/* =========================
-   BUTTON CLICK EFFECT
-========================= */
-
-document
-.querySelectorAll(".btn,.buy-btn")
 .forEach(button=>{
 
-    button.addEventListener(
-        "mousedown",
-        function(){
+button.addEventListener("click",function(){
 
-            button.style.transform =
-                "scale(.96)";
+loader.classList.add("active");
 
-        }
-    );
+setTimeout(function(){
 
+window.location.href=orderURL;
 
-    button.addEventListener(
-        "mouseup",
-        function(){
-
-            button.style.transform =
-                "";
-
-        }
-    );
+},5000);
 
 });
+
+});
+
+
+const countdownStart =
+"amir-golden-ticket-season-60";
+
+let savedEnd =
+localStorage.getItem(countdownStart);
+
+
+if(!savedEnd){
+
+const endDate =
+new Date();
+
+endDate.setDate(
+endDate.getDate()+14
+);
+
+savedEnd =
+endDate.getTime();
+
+localStorage.setItem(
+countdownStart,
+savedEnd
+);
+
+}
+
+
+function updateCountdown(){
+
+const now =
+new Date().getTime();
+
+const distance =
+Number(savedEnd)-now;
+
+
+if(distance<=0){
+
+document.getElementById("days").textContent="00";
+document.getElementById("hours").textContent="00";
+document.getElementById("minutes").textContent="00";
+document.getElementById("seconds").textContent="00";
+
+return;
+
+}
+
+
+const days =
+Math.floor(
+distance/(1000*60*60*24)
+);
+
+const hours =
+Math.floor(
+(distance%(1000*60*60*24))
+/
+(1000*60*60)
+);
+
+const minutes =
+Math.floor(
+(distance%(1000*60*60))
+/
+(1000*60)
+);
+
+const seconds =
+Math.floor(
+(distance%(1000*60))
+/
+1000
+);
+
+
+document.getElementById("days").textContent =
+String(days).padStart(2,"0");
+
+document.getElementById("hours").textContent =
+String(hours).padStart(2,"0");
+
+document.getElementById("minutes").textContent =
+String(minutes).padStart(2,"0");
+
+document.getElementById("seconds").textContent =
+String(seconds).padStart(2,"0");
+
+}
+
+
+updateCountdown();
+
+setInterval(
+updateCountdown,
+1000
+);
 
 </script>
 
 </body>
 </html>
-```
